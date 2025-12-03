@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - Django ToDo{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="glass-card p-5" style="width: 100%; max-width: 500px;">
+        <h3 class="text-center mb-4">Create Account</h3>
+
+        <form action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="mb-3">
+                <label class="form-label text-muted">{{ field.label }}</label>
+                <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}"
+                    class="form-control form-control-custom" {% if field.field.required %}required{% endif %}>
+                {% if field.errors %}
+                <div class="text-danger small mt-1">
+                    {{ field.errors }}
+                </div>
+                {% endif %}
+                {% if field.help_text %}
+                <div class="form-text small text-muted">{{ field.help_text }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-primary-custom btn-lg">
+                    Sign Up
+                </button>
+            </div>
+
+            <div class="text-center mt-3">
+                <small class="text-muted">Already have an account? <a href="{% url 'login' %}" class="text-primary"
+                        style="text-decoration: none;">Login</a></small>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

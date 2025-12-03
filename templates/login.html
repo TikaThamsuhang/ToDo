@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - Django ToDo{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="glass-card p-5" style="width: 100%; max-width: 400px;">
+        <h3 class="text-center mb-4">Welcome Back</h3>
+
+        <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+
+            {% if form.errors %}
+            <div class="alert alert-danger">
+                <small>Invalid username or password.</small>
+            </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label class="form-label text-muted">Username</label>
+                <input type="text" name="username" class="form-control form-control-custom" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label text-muted">Password</label>
+                <input type="password" name="password" class="form-control form-control-custom" required>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary-custom btn-lg">
+                    Login
+                </button>
+            </div>
+
+            <div class="text-center mt-3">
+                <small class="text-muted">Don't have an account? <a href="{% url 'register' %}" class="text-primary"
+                        style="text-decoration: none;">Sign up</a></small>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

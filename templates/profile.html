@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile - Django ToDo{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="mb-4">My Profile</h2>
+
+        <!-- Profile Card -->
+        <div class="glass-card p-4 mb-4">
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    {% if profile.avatar %}
+                    <img src="{{ profile.avatar.url }}" alt="Avatar" class="rounded-circle mb-3"
+                        style="width: 150px; height: 150px; object-fit: cover; border: 4px solid var(--primary-color);">
+                    {% else %}
+                    <div class="rounded-circle mb-3 d-flex align-items-center justify-content-center"
+                        style="width: 150px; height: 150px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); margin: 0 auto;">
+                        <span class="text-white" style="font-size: 4rem; font-weight: 700;">{{ user.username|first|upper}}</span>
+                    </div>
+                    {% endif %}
+                    <h4>{{ user.username }}</h4>
+                    <p class="text-muted">{{ user.email }}</p>
+                </div>
+                <div class="col-md-8">
+                    <h5 class="mb-3">About Me</h5>
+                    <p class="text-muted">{{ profile.bio|default:"No bio yet. Tell us about yourself!" }}</p>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="mb-1"><strong>First Name:</strong></p>
+                            <p class="text-muted">{{ user.first_name|default:"Not set" }}</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="mb-1"><strong>Last Name:</strong></p>
+                            <p class="text-muted">{{ user.last_name|default:"Not set" }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Profile Form -->
+        <div class="glass-card p-4">
+            <h5 class="mb-4">Edit Profile</h5>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">First Name</label>
+                        {{ u_form.first_name }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Last Name</label>
+                        {{ u_form.last_name }}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-muted">Email</label>
+                    {{ u_form.email }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-muted">Bio</label>
+                    {{ p_form.bio }}
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label text-muted">Profile Picture</label>
+                    {{ p_form.avatar }}
+                    <small class="form-text text-muted d-block mt-1">Upload a profile picture (JPG, PNG)</small>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary-custom btn-lg">
+                        <i class="fa fa-save me-2"></i> Save Changes
+                    </button>
+                    <a href="{% url 'home' %}" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Form styling */
+    form input[type="text"],
+    form input[type="email"],
+    form textarea {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-radius: 0.75rem;
+        border: 2px solid transparent;
+        background-color: #f9fafb;
+        transition: all 0.2s;
+    }
+
+    form input[type="text"]:focus,
+    form input[type="email"]:focus,
+    form textarea:focus {
+        background-color: white;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        outline: none;
+    }
+
+    form textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    form input[type="file"] {
+        padding: 0.5rem;
+    }
+</style>
+{% endblock %}
