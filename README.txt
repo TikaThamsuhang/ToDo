@@ -52,7 +52,7 @@ STEP 1: CLONE THE REPOSITORY
 -----------------------------
 Open your terminal/command prompt and run:
 
-    git clone <your-repository-url>
+    git clone https://github.com/TikaThamsuhang/ToDo.git
     cd todo
 
 
